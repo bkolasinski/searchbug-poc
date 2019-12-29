@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script>
+    var current = '';
+    var lastItem = 0;
+    var x;
+    var height =  $(window).height();
+
+    function addAscii(){
+      for(x=32;x<=126;x++){
+        lastItem++;
+
+        $('body').append('<div id="panel'+lastItem+'" class="panel" data-symbol="'+x+'">'+current+'&#'+x+';</div>');
+      }
+      return true;
+    }
+    function scrollToLetter(){
+      height =  $(window).height();
+      current = $('#panel'+Math.floor(($(window).scrollTop()/height)+1)).text();
+      addAscii();
+      $('.result').text(current);
+    }
+
+    $(window).load(function(){
+      addAscii();
+    })
+    $(window).scroll(function(){
+      scrollToLetter();
+    })
+  </script>
+  <style>
+    .panel{
+      height: 100vh;
+      opacity: 0;
+    }
+    h1{
+      font-size: 20px;
+      line-height: 20px;
+      text-align: center;
+      position: fixed;
+      top: calc(50vh - 10px);
+      width: 100vw;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="result"></h1>
+  <div class="panel" id="panel0"></div>
+</body>
+</html>
